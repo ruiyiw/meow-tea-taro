@@ -1,0 +1,53 @@
+# Format checks enforced on CI:
+# 1. Comments must appear above each field.
+# 2. There must be a blank line between each field.
+# 3. Inline comments (after a field on the same line) are not allowed.
+# 4. Indentation level is respected for nested fields.
+
+# environment config
+environment:
+
+  # # Required when using verl.utils.omega_conf_to_dataclass to instantiate dataclass configs
+  _target_: verl.workers.config.AgenticEnvironmentConfig
+
+  # Name of the environment, choose from ["textworld", "alfworld", "swegym", "custom"]
+  name: "textworld"
+
+  # Whether the environment is multiturn
+  is_multiturn: true
+
+  # Whether the interaction with the environment is asynchronous
+  is_async: false
+
+  # The maximum number of steps per episode
+  max_iter: 10
+
+  # The number of parallel trajectories to run per environment instance
+  n_traj: 1
+
+# agent config
+agent:
+
+  # Required when using verl.utils.omega_conf_to_dataclass to instantiate dataclass configs
+  _target_: verl.workers.config.AgenticAgentConfig
+
+  # Whether the agent uses thinking
+  use_think: false
+
+  # Whether the agent uses tools
+  use_tool: false
+
+  # Whether the agent uses memory
+  use_memory: false
+
+# reward config
+reward:
+
+  # Required when using verl.utils.omega_conf_to_dataclass to instantiate dataclass configs
+  _target_: verl.workers.config.AgenticRewardConfig
+
+  # The density of the reward, choose from ["single", "dense"]
+  density: "single"
+
+  # The type of the reward, choose from ["verified", "learned"]
+  type: "verified"
