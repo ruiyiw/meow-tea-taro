@@ -64,7 +64,8 @@ class TextWorldEnvBase(BaseEnv):
 
     
     def get_total_rewards(self):
-        pass
+        # For Textworld games, the total reward is typically the max score of the game.
+        return 1.0
 
 
 class TextWorldEnv(TextWorldEnvBase):
@@ -82,7 +83,8 @@ class TextWorldEnv(TextWorldEnvBase):
         )
         self.env = textworld.start(self.instance_file, request_infos=textworld_infos, wrappers=self.game_agent.wrappers)
         self.game_agent.reset(self.env)
-        game_state = self.env.reset()
+        # Get the initial observation text
+        self.init_state = self.format_observation(self.env.reset())
 
 
     def format_observation(self, game_state: GameState):
@@ -131,13 +133,6 @@ class TextWorldEnv(TextWorldEnvBase):
                 break  # Game completed early
         return obs, is_winning, reward
 
-    
-    def get_total_rewards(self) -> float:
-        import os
-        prefix, ext = os.path.splitext(self.instance_file)
-        game = textworld.generator.Game.load(prefix+".json")
-        return game.max_score
-    
 
     def _extract_essential_feedback(self, text):
         """
@@ -191,7 +186,8 @@ class AlfWorldEnv(TextWorldEnvBase):
             self.instance_file, self.infos, wrappers=[Filter, AlfredDemangler()]
         )
         self.game_agent.reset(self.env)
-        game_state = self.env.reset()
+        # Get the initial observation text
+        self.init_state = self.env.reset()[1]["feedback"]
 
     
     def one_step(self, command: str):
@@ -211,7 +207,3 @@ class AlfWorldEnv(TextWorldEnvBase):
                 is_winning = True
                 break  # Game completed early
         return obs, is_winning, reward
-
-
-    def get_total_rewards(self):
-        return 1.0

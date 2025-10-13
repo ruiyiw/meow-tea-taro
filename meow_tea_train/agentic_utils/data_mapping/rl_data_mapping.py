@@ -29,7 +29,7 @@ def textworld_make_map_fn(split, instances_dir, dataset_id, reward_method):
             ],
             "reward_model": {
                 "style": "rule", 
-                "ground_truth": f"{example['game_size']}_{example['game_id']}"
+                "ground_truth": f"{example['task_prefix']}_{example['instance_id']}"
             },
             "extra_info": {
                 "split": split,
@@ -37,7 +37,7 @@ def textworld_make_map_fn(split, instances_dir, dataset_id, reward_method):
                 "response": example["response"],
                 "prompt": example["prompt"],
                 "instance_path": instances_dir,
-                "instance_file": f"{example['game_size']}_{example['game_id']}",
+                "instance_file": f"{example['task_prefix']}_{example['instance_id']}",
                 "reward_method": reward_method
             },
         }

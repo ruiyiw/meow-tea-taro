@@ -73,7 +73,7 @@ class TextWorldAgent(BaseAgent) :
             from .env import AlfWorldEnv
             instance_env = AlfWorldEnv(instance_file=os.path.join(instance_dir, f"{instance_id}.tw-pddl"))
         else:
-            raise NotImplementedError(f"Environment {self.env} not supported in TextWorldTask.")
+            raise NotImplementedError(f"Environment {self.env} not supported in TextWorldAgent.")
         return instance_env
         
 
