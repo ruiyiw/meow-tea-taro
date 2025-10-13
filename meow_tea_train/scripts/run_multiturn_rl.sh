@@ -4,8 +4,8 @@ export HYDRA_FULL_ERROR=1
 # DATA/TASK CONFIG
 env_name="" # TODO (required). Choose from ['textworld', 'alfworld']
 task_prefix="" # TODO (required). Choose from ['w2-o3-q4', 'w4-o6-q8', 'alfworld', etc.]
-task_id_start=-1 # TODO (required)
-task_id_end=-1 # TODO (required, end inclusive)
+instance_id_start=-1 # TODO (required)
+instance_id_end=-1 # TODO (required, end inclusive)
 hf_data_repo="" # TODO (required). HF dataset repo id.
 hf_instances_dir="games" # TODO (required). Directory in the HF dataset repo containing instance(game) files.
 hf_train_data_dir="multiturn_ppo_data" # TODO (required). Directory in the HF dataset repo containing ppo data files.
@@ -62,9 +62,9 @@ resume_wandb_logs=True # TODO (optional, default=True). Whether to resume WandB 
 
 
 # Step 1: Process RL data
-echo "Processing multiturn RL data for tasks ${env_name}-${task_prefix} ${task_id_start}-${task_id_end}"
-python3 -m scripts_tmp.process_utils.rl_data_processor \
-    --task_id_range "$task_id_start" "$task_id_end" \
+echo "Processing multiturn RL data for tasks ${env_name}-${task_prefix} ${instance_id_start}-${instance_id_end}"
+python3 -m meow_tea_train.agentic_utils.data_process.rl_data_processor \
+    --instance_id_range "$instance_id_start" "$instance_id_end" \
     --task_prefix "$task_prefix" \
     --env_name "$env_name" \
     --hf_data_repo "$hf_data_repo" \
@@ -116,7 +116,7 @@ fi
 # Step 3: Run training
 echo "Starting RL training..."
 
-python3 -m verl.trainer.main_ppo \
+python3 -m meow_tea_train.verl.trainer.main_ppo \
     data.train_files="$local_parquet_dir/train.parquet" \
     data.val_files="$local_parquet_dir/validation.parquet" \
     data.return_raw_chat=True \
