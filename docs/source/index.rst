@@ -18,10 +18,6 @@ The learning curve for **meow-tea-taro** would be very low if you are already fa
 Features
 --------
 
-* Multi-turn interaction support for complex environments
-* Integration with TextWorld and ALFWorld
-* PPO and SFT training strategies
-* Modular architecture for easy extension
 
 .. toctree::
    :maxdepth: 2
@@ -57,27 +53,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-Quick Example
--------------
-
-Here's a simple example to get you started:
-
-.. code-block:: python
-
-   from meow_tea_train import TrainingAgent
-   from meow_tea_experiments.data_generation import generate_multiturn_data
-   
-   # Generate training data
-   data = generate_multiturn_data(
-       env_name="textworld",
-       instance_dir="./instances",
-       instance_start=0,
-       instance_end=100,
-       task_prefix="w2-o3-q4",
-       train_type="ppo"
-   )
-   
-   # Train an agent
-   agent = TrainingAgent()
-   agent.train(data)
