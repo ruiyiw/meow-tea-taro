@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Meow Tea Taro'
+project = 'meow-tea-taro'
 copyright = '2025, Ruiyi Wang, PEARLS Lab, UC San Diego'
 author = 'Ruiyi Wang'
 release = '0.1.0'
@@ -86,6 +86,11 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# Add custom CSS
+html_css_files = [
+    'css/custom.css',
+]
 
 # -- Extension configuration -------------------------------------------------
 
