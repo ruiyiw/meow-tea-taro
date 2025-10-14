@@ -83,7 +83,7 @@ _ROLLOUT_REGISTRY = {
     ("sglang", "sync"): "verl.workers.rollout.sglang_rollout.sglang_rollout.SGLangRollout",
     ("sglang", "async"): "verl.workers.rollout.sglang_rollout.sglang_rollout.ServerAdapter",
     # NOTE from meow-tea: Added your own rollout class here.
-    ("vllm_agentic", "sync"): "agentic_utils.rollout.vllm_sync_agentic_rollout.vLLMSyncAgenticRollout",
+    ("vllm_agentic", "sync"): "meow_tea_train.agentic_utils.rollout.vllm_sync_agentic_rollout.vLLMSyncAgenticRollout",
 }
 
 

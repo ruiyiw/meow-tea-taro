@@ -96,10 +96,10 @@ def main():
     parser.add_argument("--task_prefix", type=str, required=True)
     parser.add_argument("--instance_id_range", type=int, nargs=2, required=True, metavar=("START", "END"), help="Instance ID range [start, end], inclusive.")
     parser.add_argument("--hf_data_repo", type=str, required=True)
-    parser.add_argument("--hf_instances_dir", type=str, default="games")
-    parser.add_argument("--hf_train_data_dir", type=str, default="multiturn_ppo_data")
-    parser.add_argument("--local_instances_dir", type=str, default="local/games")
-    parser.add_argument("--local_train_data_dir", type=str, default="local/multiturn_ppo_data")
+    parser.add_argument("--hf_instances_dir", type=str, default="instances")
+    parser.add_argument("--hf_train_data_dir", type=str, default="multiturn_rl_data")
+    parser.add_argument("--local_instances_dir", type=str, default="local/instances")
+    parser.add_argument("--local_train_data_dir", type=str, default="local/multiturn_rl_data")
     parser.add_argument("--local_parquet_dir", type=str, default="local/train_parquet")
     parser.add_argument("--reward_method", type=str, default="single", 
                        choices=["dense", "single"])
@@ -111,19 +111,20 @@ def main():
     
     # Step 1: Download data
     download_from_hf(args.hf_data_repo, "local", args.hf_instances_dir, "dataset")
-    # download_from_hf(args.hf_data_repo, "local", args.hf_train_data_dir, "dataset")
+    download_from_hf(args.hf_data_repo, "local", args.hf_train_data_dir, "dataset")
+
     # Step 2: Extract instance files (MUST be before processing RL data)
     extract_instances_files(args.local_instances_dir)
 
     # Step 3: Process RL data (requires extracted instance files)
-    # process_rl_data(args.env_name, dataset_id, args.local_instances_dir, 
-    #                 args.local_train_data_dir, args.local_parquet_dir, args.reward_method)
+    process_rl_data(args.env_name, dataset_id, args.local_instances_dir, 
+                    args.local_train_data_dir, args.local_parquet_dir, args.reward_method)
     
     # # Step 4: Cleanup
-    # cache_dir = "local/.cache/"
-    # if os.path.exists(cache_dir):
-    #     shutil.rmtree(cache_dir)
-    #     print("Cleaned up cache directory")
+    cache_dir = "local/.cache/"
+    if os.path.exists(cache_dir):
+        shutil.rmtree(cache_dir)
+        print("Cleaned up cache directory")
 
 
 if __name__ == "__main__":

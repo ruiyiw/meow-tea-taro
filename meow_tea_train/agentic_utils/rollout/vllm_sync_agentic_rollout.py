@@ -82,7 +82,7 @@ class vLLMSyncAgenticRollout(vLLMRollout):
         """
         env_name = self.agentic_config.environment.name.lower()
         if env_name in ["textworld", "alfworld"]:
-            from agentic_menu.sync_textworld.agent import TextWorldAgent
+            from meow_tea_train.agentic_menu.sync_textworld.agent import TextWorldAgent
             agent = TextWorldAgent(
                 env=env_name,
                 prompts=prompts,
