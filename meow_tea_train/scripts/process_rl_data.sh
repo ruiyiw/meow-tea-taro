@@ -2,15 +2,15 @@
 set -euo pipefail
 
 # Configuration variables
-env_name="textworld"
-task_prefix="w8-o3-q4"
-instance_id_start=50001
-instance_id_end=55000
+env_name="alfworld"
+task_prefix="text_based"
+instance_id_start=1
+instance_id_end=3553
 hf_data_repo="PEARLS-Lab/meow-tea-taro-dataset"
-hf_instances_dir="textworld/w8-o3-q4/instances"
-hf_train_data_dir="multiturn_rl_data/5000_data"
+hf_instances_dir="$env_name/$task_prefix/instances"
+hf_train_data_dir="$env_name/$task_prefix/multiturn_rl_data/5000_data"
 local_instances_dir="local/$hf_instances_dir"
-local_train_data_dir="local/multiturn_rl_data/5000_data"
+local_train_data_dir="local/$hf_train_data_dir"
 local_parquet_dir="local/train_parquet"
 reward_method="single"
 
