@@ -14,6 +14,8 @@
 # limitations under the License.
 
 import os
+import json
+import re
 import textworld
 from typing import List
 
@@ -43,20 +45,20 @@ class EnvTrajectoryCollector:
             "objective": None,
             "walkthrough": None
         }
-        json_instance_file = os.path.join(self.instance_dir, f"{self.task_prefix}_{self.instance_id}.json")
-
-        if not os.path.exists(json_instance_file):
-            # Textworld has to use *.json file to load the game logistics
-            raise FileNotFoundError(f"JSON file for instance {self.instance_id} not found in {self.instance_dir}")
 
         if isinstance(self.env, TextWorldEnv):
+            json_instance_file = os.path.join(self.instance_dir, f"{self.task_prefix}_{self.instance_id}.json")
+            if not os.path.exists(json_instance_file):
+                # Textworld has to use *.json file to load the game logistics
+                raise FileNotFoundError(f"JSON file for instance {self.instance_id} not found in {self.instance_dir}")
+            
             game = textworld.generator.Game.load(json_instance_file)
             logistics["objective"] = game.objective
             logistics["walkthrough"] = game.walkthrough
+
         elif isinstance(self.env, AlfWorldEnv):
-            import json
-            import re
-            with open(json_instance_file, 'r') as f:
+            pddl_instance_file = os.path.join(self.instance_dir, f"{self.task_prefix}_{self.instance_id}.tw-pddl")
+            with open(pddl_instance_file, 'r') as f:
                 game_dict = json.loads(f.read())
                 logistics["walkthrough"] = game_dict["walkthrough"]
                 # AlfWorld does not have a clear "objective" field in the JSON file
