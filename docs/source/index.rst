@@ -11,7 +11,7 @@ meow-tea-taro documentation
 .. note::
    This project is under active development. APIs may change between versions.
 
-We use verl (add url: https://github.com/volcengine/verl) as the backbone architecture. 
+We use `verl <https://github.com/volcengine/verl>`_ as the backbone architecture. 
 We make minimum modifications to **verl** and provide a **ready-to-use** and **customizable** framework for training multi-turn agentic RL.
 The learning curve for **meow-tea-taro** would be very low if you are already familiar with **verl**.
 
