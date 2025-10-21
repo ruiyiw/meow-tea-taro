@@ -18,9 +18,9 @@ Just as "Multi" sounds like "Meow-tea" 🐈 🍵, our RL framework brings togeth
 ### What's on the Menu?
 At Meow-Tea Café, we serve a diverse menu of **agentic dishes** (tasks) ranging from text-based adventures to real-world software engineering challenges. Each dish in our [`meow_tea_train/agentic_menu/`](./meow_tea_train/agentic_menu/) represents a different agentic task:
 
-- 🎮 **TextWorld**: Navigate complex text-based environments
-- 🏠 **ALFWorld**: Master situated household tasks
-- 💻 **SWE-Gym**: Tackle real software engineering problems
+- 🎮 **TextWorld**: Text-based adventure game environments
+- 🏠 **ALFWorld**: Situated household tasks
+- 💻 **SWE-Gym**: Realworld software engineering problems
 - *...and more specialty dishes coming soon!*
 
 
@@ -37,7 +37,7 @@ Can't find your favorite dish on our menu? No problem! The Meow-Tea Café includ
 
 
 ### Our Recipes and Research Insights
-We provide tested recipes for different agentic tasks. These recipes are training configurations that have been validated through our experiments. You can find them under [`examples/{agentic_task}`](./examples/). 
+We provide **tested recipes for different** agentic tasks. These recipes are training configurations that have been validated through our experiments. You can find them under [`examples/{agentic_task}`](./examples/). 
 
 Our paper presents systematic findings on **what works and what doesn't** for multi-turn agentic RL. Key research questions we address include:
 
@@ -50,9 +50,14 @@ Our paper presents systematic findings on **what works and what doesn't** for mu
 
 ## 🚀 Quick Start
 
-Please refer to [the documentation](./docs/source/getting_started/quick_install.rst) for a quick docker setup. 
+Start by creating and running a Docker container with GPU support ()
+```bash
+docker create --runtime=nvidia --gpus all --net=host --shm-size="10g" --cap-add=SYS_ADMIN -v .:/workspace --name meow-tea-taro hiyouga/verl:ngc-th2.6.0-cu126-vllm0.8.4-flashinfer0.2.2-cxx11abi0 sleep infinity
+docker start meow-tea-taro
+docker exec -it meow-tea-taro bash
+```
 
-Clone latest meow-tea-taro repository and install:
+Clone the latest meow-tea-taro repository and install:
 ```bash
 git clone git@github.com:ruiyiw/meow-tea-taro.git
 cd meow-tea-taro
@@ -60,21 +65,39 @@ pip install -e .
 ```
 That's it!
 
-Run a quick example of multi-turn PPO on TextWorld tasks: 
+Run a quick example of multi-turn PPO on TextWorld tasks using Qwen2.5-0.5B-Instruct: 
 ```bash
-sh examples/textworld/run_ppo_qwen-1.5b.sh
+sh examples/textworld/run_ppo_qwen-0.5b.sh
 ```
+You should be able to see the training curve like this: [wandb log](https://api.wandb.ai/links/pearls-lab/wurzotla)
+
+
+Now you are ready to cook your RL dishes! Refer to [**the meow-tea-taro documentation**](https://meow-tea-taro.readthedocs.io/en/latest/index.html) for detailed environment, policy and reward configuration tutorials.
+
 
 ## 🔔 News
-- 🎉 **[10/21/2025]** Meow-Tea-Taro codebase is now open-source! Recipes, datasets, and model checkpoints available.
+- 🎉 **[10/21/2025]** Meow-Tea-Taro codebase is now open-source! Recipes, datasets, and model checkpoints are available.
 - 🎉 **[10/01/2025]** Paper "A Practitioner's Guide to Multi-turn Agentic Reinforcement Learning" released
 
 ## 📈 Recipes
 
+We share the recipes for TextWorld, ALFWorld, and SWE-Gym tasks [here](./recipes/). The table records a summary of the agentic tasks, our configuration, and the performance of our recipes.
+
+| Agentic Task | Base Model | Policy | Reward | Success Rate | Performance Delta| Script |
+|-------------|-------------|---------|---------|--------------|---------------|---------------|
+| TextWorld (w2-o3-q4) | Qwen2.5-1.5B-Instruct | PPO | Single | 97% | ⬆️ 82% | [recipe](./recipes/textworld_w2-o3-q4_ppo.sh) |
+| TextWorld (w4-o6-q8) | Qwen2.5-1.5B-Instruct | PPO | Single | 94% | ⬆️ 93% | [recipe](./recipes/textworld_w4-o6-q8_ppo.sh) |
+| TextWorld (cooking) | Qwen2.5-7B-Instruct | PPO | Dense | 58% | ⬆️ 29% | [recipe](./recipes/textworld_cooking_ppo.sh)
+| TextWorld (cooking) | Qwen2.5-7B-Instruct | RLOO | Dense | 55% | ⬆️ 26% | [recipe](./recipes/textworld_cooking_rloo.sh)
+| Alfworld (text-based) | Qwen2.5-7B-Instruct | PPO | Single | 74% | ⬆️ 73% | [recipe (sft)](./recipes/alfworld_text_sft.sh), [recipe (ppo)](./recipes/alfworld_text_ppo.sh)
+| SWE-Gym | Qwen3-8B | GRPO | Single | 22% | ⬆️ 18% | [recipe](./recipes/swegym_grpo.sh)
+
 
 ## 🔑 Key Findings
+[TODO] Copy paper tables and wandb runs
 
 ## 🧋 Build Your Own Agentic Pipelines!
+[TODO] Provide an entrypoint to the documentation
 
 ## 📚 Citation
 ```bibtex
