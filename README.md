@@ -37,7 +37,7 @@ Can't find your favorite dish on our menu? No problem! The Meow-Tea Café includ
 
 
 ### Our Recipes and Research Insights
-We provide **tested recipes for different** agentic tasks. These recipes are training configurations that have been validated through our experiments. You can find them under [`examples/{agentic_task}`](./examples/). 
+We provide **tested recipes for different** agentic tasks. These recipes are training configurations that have been validated through our experiments. You can find them under [`recipes/`](./recipes/) and [`examples/{agentic_task}`](./examples/). 
 
 Our paper presents systematic findings on **what works and what doesn't** for multi-turn agentic RL. Key research questions we address include:
 
@@ -50,7 +50,7 @@ Our paper presents systematic findings on **what works and what doesn't** for mu
 
 ## 🚀 Quick Start
 
-Start by creating and running a Docker container with GPU support ()
+Start by creating and running a Docker container with GPU support
 ```bash
 docker create --runtime=nvidia --gpus all --net=host --shm-size="10g" --cap-add=SYS_ADMIN -v .:/workspace --name meow-tea-taro hiyouga/verl:ngc-th2.6.0-cu126-vllm0.8.4-flashinfer0.2.2-cxx11abi0 sleep infinity
 docker start meow-tea-taro
@@ -69,10 +69,12 @@ Run a quick example of multi-turn PPO on TextWorld tasks using Qwen2.5-0.5B-Inst
 ```bash
 sh examples/textworld/run_ppo_qwen-0.5b.sh
 ```
-You should be able to see the training curve like this: [wandb log](https://api.wandb.ai/links/pearls-lab/wurzotla)
+You should be able to see the training curve like this: [wandb log](https://api.wandb.ai/links/pearls-lab/wurzotla).
 
 
 Now you are ready to cook your RL dishes! Refer to [**the meow-tea-taro documentation**](https://meow-tea-taro.readthedocs.io/en/latest/index.html) for detailed environment, policy and reward configuration tutorials.
+
+The datasets used in our [`meow_tea_experiments`](./meow_tea_experiments/) are available in 🤗 Huggingface: [PEARLS-Lab/meow-tea-taro-dataset](https://huggingface.co/datasets/PEARLS-Lab/meow-tea-taro-dataset).
 
 
 ## 🔔 News
@@ -94,10 +96,12 @@ We share the recipes for TextWorld, ALFWorld, and SWE-Gym tasks [here](./recipes
 
 
 ## 🔑 Key Findings
-[TODO] Copy paper tables and wandb runs
+Check out paper for key finds and takeaways: [**A Pracititioner's Guide to Multi-turn Agentic Reinforcement Learning**](https://arxiv.org/abs/2510.01132).
+
+We are committed to expanding the codebase (adding more agentic tasks, more RL algorithms, and different reward modeling techniques). We will provide research insights in our subsequent experiments on agentic multi-turn RL along the way. Stay tuned!
 
 ## 🧋 Build Your Own Agentic Pipelines!
-[TODO] Provide an entrypoint to the documentation
+Tutorials are under development. Will release real soon! 
 
 ## 📚 Citation
 ```bibtex
@@ -114,6 +118,6 @@ We share the recipes for TextWorld, ALFWorld, and SWE-Gym tasks [here](./recipes
 
 ---
 
-**Join our community of RL chefs! 👨‍🍳👩‍🍳** At Meow-Tea Café, we're passionate about **promoting open-source RL recipes and models**. We welcome contributions, new recipes, and fresh ideas to make Meow-Tea Café even better. We're committed to continuously updating our café. 
+**Join our community of RL chefs! 👨‍🍳👩‍🍳** At Meow-Tea Café, we're passionate about **promoting open-source RL recipes and models**. We welcome contributions, new recipes, and fresh ideas to make Meow-Tea Café even better. 
 
 **Stay tuned as we keep expanding our menu and refining our recipes!**
