@@ -51,3 +51,15 @@ reward:
 
   # The type of the reward, choose from ["verified", "learned"]
   type: "verified"
+
+# agent loop config
+agent_loop:
+
+  # Required when using verl.utils.omega_conf_to_dataclass to instantiate dataclass configs
+  _target_: verl.workers.config.AgenticAgentLoopConfig
+
+  # The type of the agent loop, choose from ["async_software"]
+  type: null
+
+  # Additional kwargs for the agent loop
+  kwargs: {}

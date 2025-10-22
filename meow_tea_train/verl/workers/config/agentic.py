@@ -13,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Optional
 
 from verl.base_config import BaseConfig
 
@@ -21,6 +22,7 @@ __all__ = [
     "AgenticEnvironmentConfig",
     "AgenticAgentConfig",
     "AgenticRewardConfig",
+    "AgenticAgentLoopConfig",
 ]
 
 # NOTE from meow-tea: These are basic configurations for agentic environment, agent and reward.
@@ -55,3 +57,23 @@ class AgenticRewardConfig(BaseConfig):
         """Validate the reward config"""
         assert self.density in ["single", "dense"], "density must be one of ['single', 'dense']"
         assert self.type in ["verified", "learned"], "type must be one of ['verified', 'learned']"
+
+
+@dataclass
+class SWEAgentKwargs:
+    """Configuration for SWE-agent specific parameters"""
+    sweagent_trajs_dir: Optional[str] = None
+    sweagent_config_path: Optional[str] = None
+
+
+@dataclass
+class AgenticAgentLoopConfig(BaseConfig):
+    type: str = "async_software"
+    kwargs: dict = field(default_factory=dict)
+
+    def __post_init__(self):
+        if self.type == "async_software":
+            # Use object.__setattr__ for frozen dataclass
+            object.__setattr__(self, 'kwargs', SWEAgentKwargs(**self.kwargs))
+        else:
+            raise ValueError(f"Unsupported agent loop type: {self.type}")

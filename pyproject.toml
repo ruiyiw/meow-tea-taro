@@ -23,7 +23,8 @@ classifiers = [
 
 dependencies = [
     "textworld",
-    "alfworld"
+    "alfworld",
+    "swe-rex"
 ]
 
 [project.optional-dependencies]

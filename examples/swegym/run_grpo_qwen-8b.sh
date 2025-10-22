@@ -4,11 +4,11 @@ export HYDRA_FULL_ERROR=1
 # DATA/TASK CONFIG
 env_name="textworld"
 task_prefix="w2-o3-q4"
-instance_id_start=50001
-instance_id_end=51000
-hf_data_repo="PEARLS-Lab/meow-tea-taro-dataset"
-hf_instances_dir="textworld/w2-o3-q4/instances"
-hf_train_data_dir="textworld/w2-o3-q4/multiturn_rl_data/1000_train_data"
+# instance_id_start=50001
+# instance_id_end=51000
+# hf_data_repo="PEARLS-Lab/meow-tea-taro-dataset"
+# hf_instances_dir="textworld/w2-o3-q4/instances"
+# hf_train_data_dir="textworld/w2-o3-q4/multiturn_rl_data/1000_train_data"
 local_instances_dir="local/$hf_instances_dir"
 local_train_data_dir="local/$hf_train_data_dir"
 local_parquet_dir="local/train_parquet"
@@ -17,25 +17,21 @@ reward_method="single"
 # MODEL CONFIG
 hf_actor_repo_id=""
 hf_actor_model_path=""
-hf_critic_repo_id=""
-hf_critic_model_path=""
 actor_model_path=local/model/actor
-critic_model_path=local/model/critic
 base_model="Qwen/Qwen2.5-1.5B-Instruct"
 
 # AGENTIC CONFIG
 # env_name=... # from above
 is_multiturn=True
-is_async=False
+is_async=True
 max_iter=8
 reward_density=$reward_method
 reward_type="verified"
 reward_manager="agentic_verified"
-rollout_name="vllm_agentic"
-rollout_mode=$( [ "$is_async" = "True" ] && echo "async" || echo "sync" ) # Set 'async' if is_async=True, else 'sync'.
+rollout_name="vllm"
 
 # ALGORITHM CONFIG
-adv_estimator=gae
+adv_estimator=grpo
 gamma=1.0
 
 use_kl_loss=False # Whether to use KL loss in objective. True for GRPO.
@@ -46,14 +42,13 @@ clip_ratio=0.2
 # TRAINING CONFIG
 rollout_temp=0.7
 val_rollout_temp=0.4
-train_batch_size=256
-ppo_mini_batch_size=256
+train_batch_size=8
+ppo_mini_batch_size=8
 max_num_batched_tokens=8192
-gpu_memory_utilization=0.8
-max_prompt_length=3072
-max_response_length=3072
+gpu_memory_utilization=0.5
+max_prompt_length=4096
+max_response_length=4096
 actor_lr=1e-6
-critic_lr=1e-5
 nnodes=1
 num_epochs=40
 save_freq=40 # per steps
@@ -67,18 +62,18 @@ resume_wandb_logs=True # TODO (optional, default=True). Whether to resume WandB 
 
 
 # Step 1: Process RL data
-echo "Processing multiturn RL data for tasks ${env_name}-${task_prefix} ${task_id_start}-${task_id_end}"
-python3 -m meow_tea_train.agentic_utils.data_process.rl_data_processor \
-    --env_name "$env_name" \
-    --task_prefix "$task_prefix" \
-    --instance_id_range "$instance_id_start" "$instance_id_end" \
-    --hf_data_repo "$hf_data_repo" \
-    --hf_instances_dir "$hf_instances_dir" \
-    --hf_train_data_dir "$hf_train_data_dir" \
-    --local_instances_dir "$local_instances_dir" \
-    --local_train_data_dir "$local_train_data_dir" \
-    --local_parquet_dir "$local_parquet_dir" \
-    --reward_method "$reward_method"
+# echo "Processing multiturn RL data for tasks ${env_name}-${task_prefix} ${task_id_start}-${task_id_end}"
+# python3 -m meow_tea_train.agentic_utils.data_process.rl_data_processor \
+#     --env_name "$env_name" \
+#     --task_prefix "$task_prefix" \
+#     --instance_id_range "$instance_id_start" "$instance_id_end" \
+#     --hf_data_repo "$hf_data_repo" \
+#     --hf_instances_dir "$hf_instances_dir" \
+#     --hf_train_data_dir "$hf_train_data_dir" \
+#     --local_instances_dir "$local_instances_dir" \
+#     --local_train_data_dir "$local_train_data_dir" \
+#     --local_parquet_dir "$local_parquet_dir" \
+#     --reward_method "$reward_method"
 
 # Step 2: Load models
 echo "Loading models..."
@@ -138,13 +133,16 @@ python3 -m meow_tea_train.verl.trainer.main_ppo \
     agentic.environment.max_iter=$max_iter \
     agentic.reward.density=$reward_density \
     agentic.reward.type=$reward_type \
+    agentic.agent_loop.type="async_software" \
+    +agentic.agent_loop.kwargs.sweagent_trajs_dir="local/trajectories" \
+    +agentic.agent_loop.kwargs.sweagent_config_path="local/sweagent_config.yaml" \
     actor_rollout_ref.model.path=$actor_model_path \
     actor_rollout_ref.model.use_remove_padding=True \
     actor_rollout_ref.model.enable_gradient_checkpointing=True \
     actor_rollout_ref.model.use_fused_kernels=False \
     actor_rollout_ref.actor.use_torch_compile=True \
     actor_rollout_ref.actor.ppo_mini_batch_size=$ppo_mini_batch_size \
-    actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=32 \
+    actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=1 \
     actor_rollout_ref.actor.use_dynamic_bsz=True \
     actor_rollout_ref.actor.entropy_coeff=0.0 \
     actor_rollout_ref.actor.use_kl_loss=$use_kl_loss \
@@ -159,12 +157,6 @@ python3 -m meow_tea_train.verl.trainer.main_ppo \
     actor_rollout_ref.rollout.n=1 \
     actor_rollout_ref.rollout.max_num_batched_tokens=$max_num_batched_tokens \
     actor_rollout_ref.rollout.val_kwargs.temperature=$val_rollout_temp \
-    critic.optim.lr=$critic_lr \
-    critic.model.path=$critic_model_path \
-    critic.model.use_remove_padding=True \
-    critic.model.enable_gradient_checkpointing=True \
-    critic.ppo_micro_batch_size_per_gpu=32 \
-    critic.use_dynamic_bsz=True \
     reward_model.reward_manager=$reward_manager \
     trainer.critic_warmup=0 \
     trainer.logger=['console','wandb'] \
