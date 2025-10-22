@@ -123,6 +123,11 @@ We share the recipes for TextWorld, ALFWorld, and SWE-Gym tasks [here](./recipes
 ## 🔑 Key Findings
 Check out paper for key finds and takeaways: [**A Pracititioner's Guide to Multi-turn Agentic Reinforcement Learning**](https://arxiv.org/abs/2510.01132).
 
+🎬 Take a look at the demonstration video summarizing the research questions addressed in our paper.
+
+https://github.com/pearls-lab/meow-tea-taro/issues/2#issuecomment-3434319380
+
+
 We are committed to expanding the codebase (adding more agentic tasks, more RL algorithms, and different reward modeling techniques). We will provide research insights in our subsequent experiments on agentic multi-turn RL along the way. Stay tuned!
 
 ## 🧋 Build Your Own Agentic Pipelines!
