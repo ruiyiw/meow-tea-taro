@@ -1,6 +1,7 @@
 <div align="center">
 <img src="figs/image.png" width="200">
-<h1>🐈 🍵 Meow-Tea-Taro 💜: A Modular Multi-turn Agentic RL Framework with Configurable Environments 🌎, Policies 🤖, and Rewards ⭐</h1></div>
+<h1>🐈 🍵 Meow-Tea-Taro 💜: A Modular Multi-turn Agentic RL Framework with Configurable Environments 🌎, Policies 🤖, and Rewards ⭐</h1>
+</div>
 
 <p align="center">
   <a href="https://arxiv.org/abs/2510.01132">
@@ -20,6 +21,11 @@
 </a>
 </p>
 
+<div align="center">
+<p style="font-size: 18px;">
+<strong>The codebase for paper: <a href="https://arxiv.org/abs/2510.01132">A Practitioner's Guide to Multi-turn Agentic Reinforcement Learning</a></strong>
+</p>
+</div>
 
 ## Table of Contents
 📖 [Overview](#overview)  
@@ -79,7 +85,7 @@ docker exec -it meow-tea-taro bash
 
 Clone the latest meow-tea-taro repository and install:
 ```bash
-git clone git@github.com:ruiyiw/meow-tea-taro.git
+git clone git@github.com:pearls-lab/meow-tea-taro.git
 cd meow-tea-taro
 pip install -e .
 ```
