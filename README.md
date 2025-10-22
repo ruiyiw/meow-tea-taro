@@ -1,5 +1,5 @@
 <div align="center">
-<img src="figs/image.png" width="200">
+<img src="assets/figs/icon.png" width="300">
 <h1>🐈 🍵 Meow-Tea-Taro 💜: A Modular Multi-turn Agentic RL Framework with Configurable Environments 🌎, Policies 🤖, and Rewards ⭐</h1></div>
 
 <p align="center">
