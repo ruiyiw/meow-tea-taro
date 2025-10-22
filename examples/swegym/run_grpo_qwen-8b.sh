@@ -1,3 +1,8 @@
+# BEFORE RUNNING THIS SCRIPT:
+# git clone git@github.com:ruiyiw/SWE-agent.git
+# cd SWE-agent
+# pip install -e .
+
 set -x
 export HYDRA_FULL_ERROR=1
 
