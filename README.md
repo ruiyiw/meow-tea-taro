@@ -1,4 +1,24 @@
-# 🐈 🍵 Meow-Tea-Taro 💜: A Modular Multi-turn Agentic RL Framework with Configurable Environments 🌎, Policies 🤖, and Rewards ⭐
+<div align="center">
+<img src="figs/image.png" width="200">
+<h1>🐈 🍵 Meow-Tea-Taro 💜: A Modular Multi-turn Agentic RL Framework with Configurable Environments 🌎, Policies 🤖, and Rewards ⭐</h1></div>
+
+<p align="center">
+  <a href="https://arxiv.org/abs/2510.01132">
+    <img src="https://img.shields.io/badge/Paper-arXiv%202510.11701-b31b1b?logo=arxiv&logoColor=white" alt="Paper on arXiv" />
+  </a>
+<a href="https://meow-tea-taro.readthedocs.io/en/latest/">
+    <img src="https://img.shields.io/badge/Docs-Documentation-blue?logo=readthedocs&logoColor=white" alt="Documentation" />
+  </a>
+  <a href="https://huggingface.co/datasets/PEARLS-Lab/meow-tea-taro-dataset">
+    <img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Dataset-yellow" alt="Hugging Face Dataset" />
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-Apache%202.0-green?logo=apache&logoColor=white" alt="Apache License" />
+  </a>
+  <a href="https://github.com/pearls-lab/meow-tea-taro">
+    <img src="https://img.shields.io/github/stars/pearls-lab/meow-tea-taro?style=social" alt="GitHub stars" />
+</a>
+</p>
 
 
 ## Table of Contents
